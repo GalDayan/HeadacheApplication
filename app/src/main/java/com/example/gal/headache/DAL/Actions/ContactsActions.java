@@ -75,4 +75,8 @@ public class ContactsActions {
     public boolean hasContacts() {
         return contactDB.numberOfRows() > 0;
     }
+
+    public long deleteAllContacts() {
+        return contactDB.delete();
+    }
 }

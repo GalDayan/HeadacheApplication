@@ -54,6 +54,19 @@ public class UserPageActivity extends Activity {
                 ReadContact();
             }
         });
+
+        txtContactsNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetAllContacts();
+            }
+        });
+    }
+
+    public void resetAllContacts() {
+        if (new ContactsActions(getBaseContext()).deleteAllContacts() > 0) {
+            loadData();
+        }
     }
 
     public void ReadContact() {
@@ -84,10 +97,10 @@ public class UserPageActivity extends Activity {
         int totalContacts = 0;
 
         for (IContactListObject contact : contacts) {
-            if (contact instanceof ContactHeader)  {
+            if (contact instanceof ContactHeader) {
                 totalLetters++;
 
-                if (((ContactHeader)contact).getSectionNumContacts() > 0) {
+                if (((ContactHeader) contact).getSectionNumContacts() > 0) {
                     totalContacts++;
                 }
             }
@@ -100,11 +113,9 @@ public class UserPageActivity extends Activity {
 
         if (totalContacts < 5) {
             contactsNumberColor = Color.RED;
-        }
-        else if (totalContacts < totalLetters / 2) {
+        } else if (totalContacts < totalLetters / 2) {
             contactsNumberColor = Color.BLUE;
-        }
-        else {
+        } else {
             contactsNumberColor = Color.GREEN;
         }
 
@@ -129,20 +140,19 @@ public class UserPageActivity extends Activity {
                     //startManagingCursor(c);
                     if (c.moveToFirst()) {
 
-                        String id =c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                        String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
 
-                        String hasPhone =c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                        String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 
                         String cNumber = null;
 
                         if (hasPhone.equalsIgnoreCase("1")) {
                             Cursor phones = getContentResolver().query(
-                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
-                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,
+                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
                                     null, null);
 
-                            if (phones.moveToFirst())
-                            {
+                            if (phones.moveToFirst()) {
                                 cNumber = phones.getString(phones.getColumnIndex("data1"));
                             }
                         }

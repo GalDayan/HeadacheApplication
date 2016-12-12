@@ -49,6 +49,21 @@ public class ContactDB extends SQLiteOpenHelper {
         return insertNum;
     }
 
+    public long delete(String userName) {
+        SQLiteDatabase db = getWritableDatabase();
+        long deleteNum = db.delete(TABLE_CONTACTS, CONTACT_NAME + "=?", new String[] { userName });
+        db.close(); // Closing database connection
+
+        return deleteNum;
+    }
+
+    public long delete() {
+        SQLiteDatabase db = getWritableDatabase();
+        long deleteNum = db.delete(TABLE_CONTACTS, null, null);
+        db.close(); // Closing database connection
+
+        return deleteNum;
+    }
 
     public int numberOfRows(){
         SQLiteDatabase db = getReadableDatabase();
