@@ -1,0 +1,103 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#0099cc" tools:context=".BL.MainActivity"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right|bottom"
+        android:id="@+id/linear"
+        android:background="@drawable/background">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="תן בראש"
+                android:id="@+id/textView"
+                android:layout_gravity="center_vertical"
+                android:elevation="2dp" />
+        </TableRow>
+
+        <FrameLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/custom_rectangle"
+            android:alpha="0.5"
+            android:elevation="20dp">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|right"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp">
+
+                <EditText
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/etUserPin"
+                    android:layout_gravity="center_horizontal|left"
+                    android:layout_marginRight="20dp"
+                    android:maxLength="4"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="שים פין"
+                    android:id="@+id/textView2"
+                    android:textColor="#ff002eff"
+                    android:layout_gravity="center" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="200dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:text="לא כולם צריכים לדעת מה אתה עושה בשעות המאוחרות של הלילה"
+                    android:id="@+id/textView3"
+                    android:layout_gravity="right|center_vertical"
+                    android:textColor="#ff00c4ff" />
+            </TableRow>
+
+            <Button
+                android:layout_width="83dp"
+                android:layout_height="33dp"
+                android:text="המשך"
+                android:id="@+id/btnContinue"
+                android:layout_gravity="left|bottom"
+                android:background="@drawable/custom_rectangle" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+</FrameLayout>
