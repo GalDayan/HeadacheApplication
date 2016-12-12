@@ -96,7 +96,7 @@ public class UserPageActivity extends Activity {
         txtTotalContactsNumber.setText(Integer.toString(totalLetters));
         txtContactsNumber.setText(Integer.toString(totalContacts));
 
-        int contactsNumberColor = Color.WHITE;
+        int contactsNumberColor;
 
         if (totalContacts < 5) {
             contactsNumberColor = Color.RED;
