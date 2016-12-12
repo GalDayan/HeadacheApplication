@@ -19,9 +19,11 @@ import android.widget.Toast;
 
 import com.example.gal.headache.BL.Adapters.ContactsAdapter;
 import com.example.gal.headache.DAL.Actions.ContactsActions;
+import com.example.gal.headache.DAL.Actions.PhaseActions;
 import com.example.gal.headache.Models.Contact;
 import com.example.gal.headache.Models.ContactHeader;
 import com.example.gal.headache.Models.Interfaces.IContactListObject;
+import com.example.gal.headache.Models.Phase;
 import com.example.gal.headache.R;
 import com.example.gal.headache.util.ContactsUtil;
 
@@ -34,6 +36,7 @@ public class UserPageActivity extends Activity {
     private ListView lsvContacts;
     private TextView txtTotalContactsNumber;
     private TextView txtContactsNumber;
+    private Phase currentPhase;
     ImageButton imgAddContact;
 
 
@@ -44,7 +47,27 @@ public class UserPageActivity extends Activity {
 
         initDM();
         initOnClick();
+        initPhases();
         loadData();
+    }
+
+    private void initPhases() {
+        PhaseActions phaseActions = new PhaseActions(getBaseContext());
+
+        if (!phaseActions.hasPhases()) {
+            phaseActions.addPhase(1);
+        }
+
+        currentPhase = phaseActions.getMaxPhase();
+
+        if (currentPhase.getNumber() == 1) {
+            // TODO: add some code with 1 start
+            return;
+        }
+
+        // TODO: add some code with 2 stars
+
+
     }
 
     private void initOnClick() {
