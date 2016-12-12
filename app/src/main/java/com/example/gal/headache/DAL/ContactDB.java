@@ -19,7 +19,6 @@ public class ContactDB extends SQLiteOpenHelper {
     // Contacts table name
     public static final String TABLE_CONTACTS = "contacts";
     // Shops Table Columns names
-    private static final String CONTACT_ID = "id";
     public static final String CONTACT_NAME = "contact_name";
     public static final String CONTACT_URI = "contact_uri";
     public static final String[] COLUMNS = {CONTACT_NAME, CONTACT_URI};
@@ -31,8 +30,7 @@ public class ContactDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + CONTACT_ID + " INTEGER PRIMARY KEY,"
-                + CONTACT_NAME + " TEXT,"
+                + CONTACT_NAME + " TEXT PRIMARY KEY,"
                 + CONTACT_URI + " TEXT )";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
