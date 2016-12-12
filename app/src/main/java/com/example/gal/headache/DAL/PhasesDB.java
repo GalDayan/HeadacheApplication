@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.Contacts;
 
 public class PhasesDB extends SQLiteOpenHelper {
 
@@ -55,5 +56,13 @@ public class PhasesDB extends SQLiteOpenHelper {
         db.close();
 
         return numRows;
+    }
+
+    public long delete() {
+        SQLiteDatabase db = getWritableDatabase();
+        long deleteNum = db.delete(TABLE_PHASE, null, null);
+        db.close(); // Closing database connection
+
+        return deleteNum;
     }
 }

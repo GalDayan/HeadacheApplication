@@ -11,6 +11,7 @@ import com.example.gal.headache.Models.Contact;
 import com.example.gal.headache.Models.Phase;
 
 import java.util.ArrayList;
+
 /**
  * Created by Gal on 22/07/2016.
  */
@@ -21,9 +22,9 @@ public class PhaseActions {
         phasesDB = new PhasesDB(ctx);
     }
 
-    public long addPhase(int currentPhase) {
+    public long addPhase(Phase phase) {
         ContentValues values = new ContentValues();
-        values.put(phasesDB.PHASE_NUMBER, ++currentPhase);
+        values.put(phasesDB.PHASE_NUMBER, phase.getNumber());
 
         return phasesDB.insert(values);
     }
@@ -33,13 +34,11 @@ public class PhaseActions {
         SQLiteDatabase db = phasesDB.getReadableDatabase();
         Cursor cursor = null;
 
-        ArrayList<Contact> contacts = new ArrayList<>();
-
         try {
             cursor =
                     db.query(phasesDB.TABLE_PHASE, // a. table
-                            phasesDB.COLUMNS, // b. column names
-                            "MAX(" + phasesDB.PHASE_NUMBER + ")", // c. selections
+                            new String[]{"MAX(" + phasesDB.PHASE_NUMBER + ")"}, // b. column names
+                            null, // c. selections
                             null, // d. select ions args
                             null, // e. group by
                             null, // f. having
@@ -48,13 +47,12 @@ public class PhaseActions {
 
 
             if (cursor != null) {
-                if (cursor.moveToNext()) {
-                    return new Phase(cursor.getInt(cursor.getColumnIndex(phasesDB.PHASE_NUMBER)));
+                if (cursor.moveToFirst()) {
+                    return new Phase(cursor.getInt(0));
                 }
             }
-        }
-        catch (Exception ex) {
-            Log.d("","");
+        } catch (Exception ex) {
+            Log.d("", "");
         }
         // 2. build query
 
@@ -70,5 +68,16 @@ public class PhaseActions {
 
     public boolean hasPhases() {
         return phasesDB.numberOfRows() > 0;
+    }
+
+    public Phase resetPhases() {
+        if (phasesDB.delete() > 0) {
+            Phase phase = new Phase(1);
+            if (addPhase(phase) > 1) {
+                return phase;
+            }
+        }
+
+        return null;
     }
 }

@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,8 @@ public class UserPageActivity extends Activity {
     private ListView lsvContacts;
     private TextView txtTotalContactsNumber;
     private TextView txtContactsNumber;
+    private ImageView imvStarPhaseOne;
+    private ImageView imvStarPhaseTwo;
     private Phase currentPhase;
     ImageButton imgAddContact;
 
@@ -55,19 +58,20 @@ public class UserPageActivity extends Activity {
         PhaseActions phaseActions = new PhaseActions(getBaseContext());
 
         if (!phaseActions.hasPhases()) {
-            phaseActions.addPhase(1);
+            phaseActions.addPhase(new Phase(1));
         }
 
         currentPhase = phaseActions.getMaxPhase();
+        setStarsVisibilityByPhase();
+    }
 
-        if (currentPhase.getNumber() == 1) {
-            // TODO: add some code with 1 start
-            return;
+    private void setStarsVisibilityByPhase() {
+        if (currentPhase.getNumber() >= 1) {
+            imvStarPhaseOne.setVisibility(View.VISIBLE);
         }
-
-        // TODO: add some code with 2 stars
-
-
+        if (currentPhase.getNumber() >= 2) {
+            imvStarPhaseTwo.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initOnClick() {
@@ -86,8 +90,14 @@ public class UserPageActivity extends Activity {
         });
     }
 
+    private void raisePhaseByOne() {
+        currentPhase.setNumber(currentPhase.getNumber() + 1);
+        new PhaseActions(getBaseContext()).addPhase(currentPhase);
+    }
+
     public void resetAllContacts() {
         if (new ContactsActions(getBaseContext()).deleteAllContacts() > 0) {
+            currentPhase = new PhaseActions(getBaseContext()).resetPhases();
             loadData();
         }
     }
@@ -107,6 +117,12 @@ public class UserPageActivity extends Activity {
         List<IContactListObject> arrayOfContacts = ContactsUtil.getContactsWithSections(getBaseContext());
 
         setCountContactsAtTitle(arrayOfContacts);
+
+        if (txtContactsNumber.getText().equals(txtTotalContactsNumber.getText())) {
+            raisePhaseByOne();
+        }
+
+        setStarsVisibilityByPhase();
 
         // Create the adapter to convert the array to views
         ContactsAdapter adapter = new ContactsAdapter(this, arrayOfContacts);
@@ -150,6 +166,8 @@ public class UserPageActivity extends Activity {
         imgAddContact = (ImageButton) findViewById(R.id.imgButtonAddContact);
         txtTotalContactsNumber = (TextView) findViewById(R.id.txtTotalContacts);
         txtContactsNumber = (TextView) findViewById(R.id.txtNumOfContacts);
+        imvStarPhaseOne = (ImageView) findViewById(R.id.imvStarOne);
+        imvStarPhaseTwo = (ImageView) findViewById(R.id.imvStarTwo);
     }
 
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
